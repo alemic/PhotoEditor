@@ -1,8 +1,10 @@
 package com.example.photoeditor.helpers;
 
 import android.content.ContentResolver;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Environment;
 import android.provider.MediaStore;
 
@@ -55,6 +57,16 @@ public class ImageSaver {
     {
         Bitmap bitmap = BitmapFactory.decodeByteArray(image,0,image.length);
         return bitmap;
+    }
+    public static Intent getImageInstagramIntent(String type,String mediaPath,String caption)
+    {
+        Intent intent = new Intent(Intent.ACTION_SEND);
+        intent.setType(type);
+        File photoFile = new File(mediaPath);
+        Uri uri = Uri.fromFile(photoFile);
+        intent.putExtra(Intent.EXTRA_STREAM,uri);
+        intent.putExtra(Intent.EXTRA_TEXT,caption);
+        return intent;
     }
 }
 
