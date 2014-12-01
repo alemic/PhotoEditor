@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">PhotoEditor</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_instagram">Instagram</string>
+    <string name="title_activity_galary">GalaryActivity</string>
+    <string name="button_from_gallary">Galary</string>
+    <string name="client_id">9eca079586dc4eda8c71a39801dede9e</string>
+    <string name="client_secret">0adf7e3fd4fb479383e9bdbe0763bbd9</string>
+    <string name="redirect_uri">https://instagram.com/accounts/login/</string>
+    <string name="context_menu_gallery">Get photo from Gallery</string>
+    <string name="context_menu_instagram">Get photo from Instagram</string>
+    <string name="save_options_menu">Save</string>
+    <string name="menu_options_menu">Menu</string>
+    <string name="menu_options_crop">Crop</string>
+    <string name="menu_optins_unCrop">Uncrop</string>
+    <string name="button_take_photo">Take</string>
+    <string name="context_menu_camera">Get photo from Camera</string>
+    <string name="dialog_title">This is result photo</string>
+    <string name="dialog_answer">Would you like to save this photo, or make new?</string>
+    <string name="context_menu_filters">Overwrite filters</string>
+</resources>

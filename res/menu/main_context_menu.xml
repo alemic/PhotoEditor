@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<item android:id="@+id/instagram"
+        android:title="@string/context_menu_instagram"
+        android:icon="@drawable/inst"></item>
+        <item android:id="@+id/gallery"
+                android:title="@string/context_menu_gallery"></item>
+        <item android:id="@+id/camera"
+                android:title="@string/context_menu_camera"></item>
+        <item android:id="@+id/filter"
+                android:title="@string/context_menu_filters"></item>
+</menu>
