@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import com.example.photoeditor.fragments.InstagramLoginFragment;
+import com.example.photoeditor.R;
 
 /**
  * Created by Андрей on 16.11.2014.

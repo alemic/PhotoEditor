@@ -14,7 +14,6 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import com.example.photoeditor.FilterActivity;
 import com.example.photoeditor.R;
-import com.example.photoeditor.helpers.FirstRenderer;
 import com.example.photoeditor.helpers.ImageSaver;
 
 /**

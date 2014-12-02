@@ -2,6 +2,7 @@ package com.example.photoeditor.fragments;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
@@ -33,6 +34,12 @@ public class SaveDialogFragment extends DialogFragment {
         arcMenuInit();
         return new AlertDialog.Builder(getActivity()).setView(view)
                 .setTitle(getString(R.string.save_dialog_title))
+                .setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dismiss();
+                    }
+                })
                 .create();
     }
     private void arcMenuInit()

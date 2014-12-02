@@ -28,7 +28,7 @@ import java.util.UUID;
  * Created by Андрей on 25.11.2014.
  */
 @SuppressWarnings("deprecation")
-public class CameraFragment extends Fragment {
+public class CameraFragment extends Fragment implements SurfaceHolder.Callback {
     private static final String TAG = "camera dialog";
     public static final int CAMERA_DIALOG_REQUEST=0;
     private Camera mCamera;
@@ -36,6 +36,7 @@ public class CameraFragment extends Fragment {
     private Button mTakeButton;
     private FrameLayout mProgressContainer;
     private byte[] mPhotoArray;
+    private SurfaceHolder mHolder;
     private Camera.ShutterCallback mShutter = new Camera.ShutterCallback() {
         @Override
         public void onShutter() {
@@ -54,10 +55,12 @@ public class CameraFragment extends Fragment {
             fragment.show(getActivity().getSupportFragmentManager(),TAG);
         }
     };
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.camera_fragment,container,false);
         mSurfaceView = (SurfaceView)view.findViewById(R.id.surfaceView);
+        mHolder = mSurfaceView.getHolder();
         mTakeButton = (Button)view.findViewById(R.id.takeButton);
         mProgressContainer = (FrameLayout)view.findViewById(R.id.progress_container);
         mProgressContainer.setVisibility(View.INVISIBLE);
@@ -74,55 +77,13 @@ public class CameraFragment extends Fragment {
                 }
             }
         });
-        holder.addCallback(new SurfaceHolder.Callback() {
-            @Override
-            public void surfaceCreated(SurfaceHolder surfaceHolder) {
-                try
-                {
-                    if(mCamera!=null)
-                    {
-                        mCamera.setPreviewDisplay(holder);
-                        mCamera.startPreview();
-                    }
-                }catch (IOException ex)
-                {
-                    ex.printStackTrace();
-                }
-            }
-            @Override
-            public void surfaceChanged(SurfaceHolder surfaceHolder, int format, int width, int height) {
-                if(mCamera==null)return;
-
-                        Camera.Parameters parameters = mCamera.getParameters();
-                        Camera.Size size = getBestSize(parameters.getSupportedPreviewSizes());
-                        parameters.setPreviewSize(size.width,size.height);
-                        mCamera.setParameters(parameters);
-                try {
-                        mCamera.startPreview();
-                }catch (Exception ex)
-                {
-                    ex.printStackTrace();
-                    if(mCamera!=null)
-                    {
-                        mCamera.release();
-                        mCamera = null;
-                    }
-                }
-            }
-            @Override
-            public void surfaceDestroyed(SurfaceHolder surfaceHolder) {
-                if(mCamera!=null)
-                {
-                    mCamera.stopPreview();
-                }
-            }
-        });
         return view;
     }
     @Override
     public void onResume() {
         super.onResume();
         try {
+            mHolder.addCallback(this);
             mCamera = Camera.open(0);
         }catch (Exception ex)
         {
@@ -134,8 +95,52 @@ public class CameraFragment extends Fragment {
         super.onPause();
         if(mCamera!=null)
         {
+            mHolder.removeCallback(this);
             mCamera.release();
             mCamera = null;
+        }
+    }
+    @Override
+    public void surfaceCreated(SurfaceHolder surfaceHolder) {
+        try
+        {
+            if(mCamera!=null)
+            {
+                mCamera.setPreviewDisplay(mHolder);
+                mCamera.startPreview();
+            }
+        }catch (IOException ex)
+        {
+            ex.printStackTrace();
+        }
+    }
+
+    @Override
+    public void surfaceChanged(SurfaceHolder surfaceHolder, int i, int i1, int i2) {
+        if(mCamera==null)return;
+
+        Camera.Parameters parameters = mCamera.getParameters();
+        Camera.Size size = getBestSize(parameters.getSupportedPreviewSizes());
+        parameters.setPreviewSize(size.width,size.height);
+        mCamera.setParameters(parameters);
+        try {
+            mCamera.startPreview();
+        }catch (Exception ex)
+        {
+            ex.printStackTrace();
+            if(mCamera!=null)
+            {
+                mCamera.release();
+                mCamera = null;
+            }
+        }
+    }
+
+    @Override
+    public void surfaceDestroyed(SurfaceHolder surfaceHolder) {
+        if(mCamera!=null)
+        {
+            mCamera.stopPreview();
         }
     }
     @Override
@@ -153,6 +158,8 @@ public class CameraFragment extends Fragment {
                 else
                 {
                     mProgressContainer.setVisibility(View.INVISIBLE);
+                    mSurfaceView.refreshDrawableState();
+                    mCamera.startPreview();
                 }
                 break;
             default:
