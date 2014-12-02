@@ -23,7 +23,6 @@ import java.util.ArrayList;
 public class ImageDowloader extends AsyncTask<URL,Void,Void>
 {
     private Bitmap mPhoto;
-
     public Bitmap getmPhoto() {
         return mPhoto;
     }
@@ -42,8 +41,7 @@ public class ImageDowloader extends AsyncTask<URL,Void,Void>
         {
             URLConnection connection = urls[0].openConnection();
             connection.connect();
-            mPhoto=BitmapFactory.decodeStream(connection.getInputStream());
-            isSuccess = true;
+          mPhoto=Drawing.getPermissibleBitmap(connection.getInputStream());
         }catch (IOException ex)
         {
             ex.printStackTrace();
