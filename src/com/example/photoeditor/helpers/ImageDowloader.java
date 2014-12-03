@@ -40,8 +40,17 @@ public class ImageDowloader extends AsyncTask<URL,Void,Void>
         try
         {
             URLConnection connection = urls[0].openConnection();
-            connection.connect();
-          mPhoto=Drawing.getPermissibleBitmap(connection.getInputStream());
+            if(CacheHelper.alreadyInCache(urls[0].toString()))
+            {
+                mPhoto = CacheHelper.getBitmap(urls[0].toString());
+            }
+            else {
+                connection.connect();
+                Bitmap photo = Drawing.getPermissibleBitmap(connection.getInputStream());
+                mPhoto = photo;
+                CacheHelper.addBitmap(photo,urls[0].toString());
+            }
+            isSuccess = true;
         }catch (IOException ex)
         {
             ex.printStackTrace();

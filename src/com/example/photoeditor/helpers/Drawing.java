@@ -70,7 +70,7 @@ public class Drawing {
         }
         return inSampleSize;
     }
-    public static Bitmap decodeSampledBitmapFromStream(InputStream stream, int reqWidth, int reqHeight) {
+    private static Bitmap decodeSampledBitmapFromStream(InputStream stream, int reqWidth, int reqHeight) {
         final BitmapFactory.Options options = new BitmapFactory.Options();
         stream.mark(0);
         options.inJustDecodeBounds = true;
@@ -88,6 +88,10 @@ public class Drawing {
     public static Bitmap getPermissibleBitmap(InputStream bitmapStream)
     {
         Bitmap bitmap = BitmapFactory.decodeStream(bitmapStream);
+        return getPermissibleBitmap(bitmap);
+    }
+    public static Bitmap getPermissibleBitmap(Bitmap bitmap)
+    {
         if(bitmap.getHeight()>MAX_PHOTO_HEIGHT&&bitmap.getWidth()>MAX_PHOTO_WIDTH)
         {
             bitmap = Bitmap.createScaledBitmap(bitmap,MAX_PHOTO_WIDTH,MAX_PHOTO_HEIGHT,false);
@@ -103,5 +107,17 @@ public class Drawing {
             bitmap = Bitmap.createScaledBitmap(bitmap,bitmap.getWidth(),MAX_PHOTO_HEIGHT,false);
         }
         return bitmap;
+    }
+    public static Bitmap sizeToBehindBitmap(Bitmap targetBitmap,Bitmap behindBitmap)
+    {
+        if(targetBitmap.getWidth()==behindBitmap.getWidth()&&
+                targetBitmap.getHeight()==behindBitmap.getHeight())
+        {
+            return targetBitmap;
+        }
+        else
+        {
+            return Bitmap.createScaledBitmap(targetBitmap,behindBitmap.getWidth(),behindBitmap.getHeight(),false);
+        }
     }
 }

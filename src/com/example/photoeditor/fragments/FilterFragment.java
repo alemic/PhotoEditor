@@ -12,9 +12,11 @@ import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import com.example.photoeditor.FilterActivity;
 import com.example.photoeditor.R;
 import com.example.photoeditor.helpers.ImageSaver;
+import uk.co.senab.photoview.PhotoViewAttacher;
 
 /**
  * Created by Андрей on 27.11.2014.
@@ -22,24 +24,30 @@ import com.example.photoeditor.helpers.ImageSaver;
 public class FilterFragment extends Fragment {
     private FilterFragment(){}
     private static final String PHOTO = "photo";
-    private ImageView mAgreeImage;
+    private ImageView mAgreeImage,mPhoto;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        setRetainInstance(true);
         Bundle args = getArguments();
         final Bitmap photo = args.getParcelable(PHOTO);
         View view = inflater.inflate(R.layout.filter_fragmnet,container,false);
-        ImageView imageView = (ImageView)view.findViewById(R.id.photo);
-        imageView.setImageBitmap(photo);
+        mPhoto = (ImageView)view.findViewById(R.id.photo);
+        mPhoto.setImageBitmap(photo);
         mAgreeImage = (ImageView)view.findViewById(R.id.imageButtonAgree);
         mAgreeImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                /*
                 mAgreeImage.startAnimation(AnimationUtils.loadAnimation(getActivity(),R.anim.button_animation));
                 Intent intent = new Intent();
                 byte[] image =  ImageSaver.compressImage(photo,100);
                 intent.putExtra(FilterActivity.PHOTO_WITH_EFFECT,image);
                 getActivity().setResult(Activity.RESULT_OK,intent);
-                getActivity().finish();
+                getActivity().finish();*/
+                ViewGroup.LayoutParams params =  mPhoto.getLayoutParams();
+                params.height=30;
+                params.width = 30;
+                mPhoto.setLayoutParams(params);
             }
         });
         return view;

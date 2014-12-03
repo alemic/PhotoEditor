@@ -6,6 +6,7 @@
       <module fileurl="file://$PROJECT_DIR$/PhotoEditor.iml" filepath="$PROJECT_DIR$/PhotoEditor.iml" />
       <module fileurl="file://$PROJECT_DIR$/../appcompat_v7/appcompat_v7.iml" filepath="$PROJECT_DIR$/../appcompat_v7/appcompat_v7.iml" />
       <module fileurl="file://D:/Файлы/Libs/ArcMenu-master/library/library.iml" filepath="D:/Файлы/Libs/ArcMenu-master/library/library.iml" />
+      <module fileurl="file://D:/Файлы/Libs/PhotoView-master/library/src/main/main.iml" filepath="D:/Файлы/Libs/PhotoView-master/library/src/main/main.iml" />
     </modules>
   </component>
 </project>

@@ -34,6 +34,7 @@ public class DisplayPhotoFragment extends Fragment {
     }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        setRetainInstance(true);
         View view = inflater.inflate(R.layout.view_photo_fragment,container,false);
         mThumbnailPhotos = ImagesRepository.getPhotos(mAcessToken,"standard_resolution").getTumbnailBitmaps();
         mGridView = (GridView)view.findViewById(R.id.gridView);

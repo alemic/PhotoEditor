@@ -19,6 +19,7 @@ public class InstagramLoginFragment extends Fragment {
     private String mAcessToken;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        setRetainInstance(true);
         View view = inflater.inflate(R.layout.login_fragment,container,false);
         mWebView = (WebView)view.findViewById(R.id.webViewInstagram);
         mWebView.getSettings().setJavaScriptEnabled(true);
