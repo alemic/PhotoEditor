@@ -47,7 +47,7 @@ public class SaveDialogFragment extends DialogFragment {
         ImageView imageInstagram = new ImageView(getActivity());
         imageInstagram.setImageResource(R.drawable.inst);
         ImageView imageGalary = new ImageView(getActivity());
-        imageGalary.setImageResource(android.R.drawable.ic_menu_gallery);
+        imageGalary.setImageResource(R.drawable.galary);
         mArcMenu.addItem(imageGalary, new View.OnClickListener() {
             @Override
             public void onClick(View view) {

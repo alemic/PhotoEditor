@@ -9,4 +9,6 @@
                 android:title="@string/context_menu_camera"></item>
         <item android:id="@+id/filter"
                 android:title="@string/context_menu_filters"></item>
+        <item android:id="@+id/funny"
+                android:title="Draw funny things"></item>
 </menu>

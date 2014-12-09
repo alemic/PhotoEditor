@@ -12,6 +12,7 @@ import android.widget.Toast;
 import com.capricorn.ArcMenu;
 import com.capricorn.RayMenu;
 
+import java.awt.font.TextAttribute;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.PushbackInputStream;
@@ -108,16 +109,30 @@ public class Drawing {
         }
         return bitmap;
     }
-    public static Bitmap sizeToBehindBitmap(Bitmap targetBitmap,Bitmap behindBitmap)
+    public static Bitmap sizeToBehindBitmap(Bitmap targetBitmap,int targetSize,boolean isVertical)
     {
-        if(targetBitmap.getWidth()==behindBitmap.getWidth()&&
-                targetBitmap.getHeight()==behindBitmap.getHeight())
-        {
-            return targetBitmap;
+        float different,percent;
+        if(isVertical) {
+            if(targetBitmap.getHeight()== targetSize)
+            {
+               return targetBitmap;
+            }
+                 different = targetSize - targetBitmap.getHeight();
+                 percent = different / targetBitmap.getHeight();
+                float targetWidth = targetBitmap.getWidth() * percent;
+                return Bitmap.createScaledBitmap(targetBitmap, (int) (targetBitmap.getWidth() + targetWidth),targetSize, false);
         }
         else
         {
-            return Bitmap.createScaledBitmap(targetBitmap,behindBitmap.getWidth(),behindBitmap.getHeight(),false);
+            if(targetBitmap.getWidth()==targetSize)
+            {
+                return targetBitmap;
+            }
+                different = targetSize - targetBitmap.getWidth();
+                percent = different/targetBitmap.getHeight();
+                float targetHeight = targetBitmap.getHeight()*percent;
+                return Bitmap.createScaledBitmap(targetBitmap,targetSize,(int)(targetBitmap.getHeight()+targetHeight),false);
         }
+
     }
 }

@@ -5,8 +5,8 @@
               android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:background="@drawable/camera">
+        android:background="@drawable/background_dialog">
     <com.capricorn.ArcMenu android:id="@+id/arc_menu"
             android:layout_width="wrap_content"
-                           android:layout_height="wrap_content"></com.capricorn.ArcMenu>
+            android:layout_height="wrap_content"></com.capricorn.ArcMenu>
 </LinearLayout>

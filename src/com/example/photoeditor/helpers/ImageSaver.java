@@ -50,7 +50,7 @@ public class ImageSaver {
             throw new IllegalArgumentException("Compress size must be below then 100");
         }
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.JPEG,100,stream);
+        bitmap.compress(Bitmap.CompressFormat.JPEG,compressSize,stream);
         return stream.toByteArray();
     }
     public static Bitmap getBitmapFromByteArray(byte[]image)

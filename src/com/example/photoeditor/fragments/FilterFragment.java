@@ -37,17 +37,12 @@ public class FilterFragment extends Fragment {
         mAgreeImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                /*
                 mAgreeImage.startAnimation(AnimationUtils.loadAnimation(getActivity(),R.anim.button_animation));
                 Intent intent = new Intent();
                 byte[] image =  ImageSaver.compressImage(photo,100);
                 intent.putExtra(FilterActivity.PHOTO_WITH_EFFECT,image);
                 getActivity().setResult(Activity.RESULT_OK,intent);
-                getActivity().finish();*/
-                ViewGroup.LayoutParams params =  mPhoto.getLayoutParams();
-                params.height=30;
-                params.width = 30;
-                mPhoto.setLayoutParams(params);
+                getActivity().finish();
             }
         });
         return view;
