@@ -121,7 +121,7 @@ public class FunnyFragment extends Fragment {
         mSeekBarSizeChange.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean b) {
-                mScaleValue = (float)(progress/10f);
+                mScaleValue = progress/10f;
                 Matrix matrix = mOverlayImageView.getImageMatrix();
                 matrix.setScale(mScaleValue,mScaleValue);
                 FrameLayout.LayoutParams params = (FrameLayout.LayoutParams)mOverlayImageView.getLayoutParams();
