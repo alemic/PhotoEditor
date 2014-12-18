@@ -1,17 +1,16 @@
 package com.example.photoeditor.helpers;
 
 import android.content.ContentResolver;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Environment;
 import android.provider.MediaStore;
+import com.example.photoeditor.R;
 
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import java.io.*;
 import java.util.Random;
 
 /**
@@ -67,6 +66,56 @@ public class ImageSaver {
         intent.putExtra(Intent.EXTRA_STREAM,uri);
         intent.putExtra(Intent.EXTRA_TEXT,caption);
         return intent;
+    }
+    public static void saveImageInPrivateRepository(Context context,Bitmap image,String fileName)
+    {
+        try {
+            OutputStream stream = context.openFileOutput(fileName, Context.MODE_PRIVATE);
+            image.compress(Bitmap.CompressFormat.PNG,100,stream);
+            stream.flush();
+            stream.close();
+        }
+        catch (FileNotFoundException ex)
+        {
+            ex.printStackTrace();
+        }
+        catch (IOException ex)
+        {
+            ex.printStackTrace();
+        }
+    }
+    public static Bitmap getImageInPrivateRepository(Context context,String fileName)
+    {
+        InputStream stream = null;
+        try
+        {
+            stream =  context.openFileInput(fileName);
+        }catch (FileNotFoundException ex)
+        {
+            ex.printStackTrace();
+        }
+        return BitmapFactory.decodeStream(stream);
+    }
+    public static void saveCustomFunnyThings(Bitmap thing,Context context,String folderName)
+    {
+        File imagesFile = new File(context.getFilesDir(),folderName);
+        if(!(imagesFile.exists()))
+        {
+            imagesFile.mkdir();
+        }
+        try {
+            File anotherFile = new File(imagesFile,Integer.toString(thing.hashCode())+".jpg");
+            FileOutputStream stream = new FileOutputStream(anotherFile);
+            thing.compress(Bitmap.CompressFormat.PNG,100,stream);
+            stream.flush();
+            stream.close();
+        }catch (FileNotFoundException ex)
+        {
+            ex.printStackTrace();
+        }catch (IOException ex)
+        {
+            ex.printStackTrace();
+        }
     }
 }
 

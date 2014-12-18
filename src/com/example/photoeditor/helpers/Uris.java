@@ -12,5 +12,6 @@ public class Uris {
 	public static final String tokenURLString =TOKENURL + "?client_id=" + CLIENT_ID + "&client_secret=" +
     CLIENT_SECRET + "&redirect_uri=" +REDIRECT_URI+ "&grant_type=authorization_code";
 	public static final String PHOTO_GET ="https://api.instagram.com/v1/users/self/media/recent/?access_token=";
-	
+	public static final String LOG_OUT_URI = "https://instagram.com/accounts/logout/";
+	public static final String START_PAGE_URI = "https://instagram.com/";
 }

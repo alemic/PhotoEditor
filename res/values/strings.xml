@@ -21,5 +21,6 @@
     <string name="dialog_answer">Would you like to save this photo, or make new?</string>
     <string name="context_menu_filters">Overwrite filters</string>
     <string name="save_dialog_title">Where do you want to save your photo?</string>
-
+    <string name="crop_dialog_fragment">Crop photo</string>
+    <string name="instagram_log_out">Log out</string>
 </resources>

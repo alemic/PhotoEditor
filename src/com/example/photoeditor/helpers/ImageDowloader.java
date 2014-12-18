@@ -46,7 +46,7 @@ public class ImageDowloader extends AsyncTask<URL,Void,Void>
             }
             else {
                 connection.connect();
-                Bitmap photo = Drawing.getPermissibleBitmap(connection.getInputStream());
+                Bitmap photo = BitmapFactory.decodeStream(connection.getInputStream());
                 mPhoto = photo;
                 CacheHelper.addBitmap(photo,urls[0].toString());
             }

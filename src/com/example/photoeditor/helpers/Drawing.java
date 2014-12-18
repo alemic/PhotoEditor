@@ -1,11 +1,13 @@
 package com.example.photoeditor.helpers;
 
+import android.content.ContentProviderClient;
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.res.Resources;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Canvas;
-import android.graphics.Paint;
+import android.graphics.*;
+import android.net.Uri;
+import android.os.ParcelFileDescriptor;
+import android.os.RemoteException;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -13,15 +15,14 @@ import com.capricorn.ArcMenu;
 import com.capricorn.RayMenu;
 
 import java.awt.font.TextAttribute;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.PushbackInputStream;
+import java.io.*;
 
 /**
  * Created by Андрей on 18.11.2014.
  */
 public class Drawing {
-    public static final int MAX_PHOTO_WIDTH = 600,MAX_PHOTO_HEIGHT = 800;
+    public static final int MAX_PHOTO_WIDTH = 800,MAX_PHOTO_HEIGHT = 1200,
+    MAX_FUNNY_WIDTH = 64,MAX_FUNNY_HEIGHT = 64;
     public Bitmap putOverlay(Bitmap bitmap, Bitmap overlay,int top,int left) {
         Bitmap second,outBitmap;
         outBitmap = bitmap.copy(Bitmap.Config.ARGB_8888,true);
@@ -62,8 +63,8 @@ public class Drawing {
         final int width = options.outWidth;
         int inSampleSize = 1;
         if (height > reqHeight || width > reqWidth) {
-            final int halfHeight = height / 2;
-            final int halfWidth = width / 2;
+            final int halfHeight = height;
+            final int halfWidth = width;
             while ((halfHeight / inSampleSize) > reqHeight
                     && (halfWidth / inSampleSize) > reqWidth) {
                 inSampleSize *= 2;
@@ -71,68 +72,40 @@ public class Drawing {
         }
         return inSampleSize;
     }
-    private static Bitmap decodeSampledBitmapFromStream(InputStream stream, int reqWidth, int reqHeight) {
-        final BitmapFactory.Options options = new BitmapFactory.Options();
-        stream.mark(0);
+    public static Bitmap decodeSampledBitmapFromFileDescriptor(FileDescriptor descriptor) {
+        BitmapFactory.Options options = null;
+        options = new BitmapFactory.Options();
         options.inJustDecodeBounds = true;
-        BitmapFactory.decodeStream(stream,null,options);
-        options.inSampleSize = calculateInSampleSize(options, reqWidth, reqHeight);
+        BitmapFactory.decodeFileDescriptor(descriptor, null, options);
+        options.inSampleSize = calculateInSampleSize(options, MAX_PHOTO_WIDTH, MAX_PHOTO_HEIGHT);
         options.inJustDecodeBounds = false;
-        try {
-            stream.reset();
-        }catch (IOException ex)
-        {
-            ex.printStackTrace();
-        }
-        return BitmapFactory.decodeStream(stream,null,options);
+        return BitmapFactory.decodeFileDescriptor(descriptor,null,options);
     }
-    public static Bitmap getPermissibleBitmap(InputStream bitmapStream)
+    public static Bitmap getPermissibleBitmap(InputStream bitmapStream,int reqWidth,int reqHeight)
     {
         Bitmap bitmap = BitmapFactory.decodeStream(bitmapStream);
-        return getPermissibleBitmap(bitmap);
+        return getPermissibleBitmap(bitmap,reqWidth,reqHeight);
     }
-    public static Bitmap getPermissibleBitmap(Bitmap bitmap)
+    public static Bitmap getPermissibleBitmap(Bitmap bitmap,int reqWidth,int reqHeight)
     {
-        if(bitmap.getHeight()>MAX_PHOTO_HEIGHT&&bitmap.getWidth()>MAX_PHOTO_WIDTH)
+        if(bitmap.getHeight()>reqHeight&&bitmap.getWidth()>reqWidth)
         {
-            bitmap = Bitmap.createScaledBitmap(bitmap,MAX_PHOTO_WIDTH,MAX_PHOTO_HEIGHT,false);
+            bitmap = Bitmap.createScaledBitmap(bitmap,reqWidth,reqHeight,false);
         }
         else
-        if(bitmap.getWidth()>MAX_PHOTO_WIDTH)
+        if(bitmap.getWidth()>reqWidth)
         {
-            bitmap = Bitmap.createScaledBitmap(bitmap,MAX_PHOTO_WIDTH,bitmap.getHeight(),false);
+            bitmap = Bitmap.createScaledBitmap(bitmap,reqWidth,bitmap.getHeight(),false);
         }
         else
-        if(bitmap.getHeight()>MAX_PHOTO_HEIGHT)
+        if(bitmap.getHeight()>reqHeight)
         {
-            bitmap = Bitmap.createScaledBitmap(bitmap,bitmap.getWidth(),MAX_PHOTO_HEIGHT,false);
+            bitmap = Bitmap.createScaledBitmap(bitmap,bitmap.getWidth(),reqHeight,false);
         }
         return bitmap;
     }
-    public static Bitmap sizeToBehindBitmap(Bitmap targetBitmap,int targetSize,boolean isVertical)
+    public static int getDifferent(int behind, int front)
     {
-        float different,percent;
-        if(isVertical) {
-            if(targetBitmap.getHeight()== targetSize)
-            {
-               return targetBitmap;
-            }
-                 different = targetSize - targetBitmap.getHeight();
-                 percent = different / targetBitmap.getHeight();
-                float targetWidth = targetBitmap.getWidth() * percent;
-                return Bitmap.createScaledBitmap(targetBitmap, (int) (targetBitmap.getWidth() + targetWidth),targetSize, false);
-        }
-        else
-        {
-            if(targetBitmap.getWidth()==targetSize)
-            {
-                return targetBitmap;
-            }
-                different = targetSize - targetBitmap.getWidth();
-                percent = different/targetBitmap.getHeight();
-                float targetHeight = targetBitmap.getHeight()*percent;
-                return Bitmap.createScaledBitmap(targetBitmap,targetSize,(int)(targetBitmap.getHeight()+targetHeight),false);
-        }
-
+        return  behind>0?front-behind:Math.abs(behind)+front;
     }
 }

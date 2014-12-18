@@ -21,15 +21,13 @@ public class FilterActivity extends FragmentActivity {
     private ViewPager mViewPager;
     private FilterMaker mFilterMaker;
     private Bitmap mPhoto;
-    public static final String PHOTO_FROM_EDITOR = "photo_from_editor";
     public static final String PHOTO_WITH_EFFECT = "photo_with_effect";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.filter_activity);
         mFilterMaker = new FilterMaker();
-        byte []image = getIntent().getByteArrayExtra(PHOTO_FROM_EDITOR);
-        mPhoto = ImageSaver.getBitmapFromByteArray(image);
+        mPhoto = ImageSaver.getImageInPrivateRepository(this,getIntent().getStringExtra(StartActivity.PHOTO_FROM_EDITOR));
         mViewPager = (ViewPager)findViewById(R.id.viewPager);
         mViewPager.setAdapter(new ViewPagerFragmentAdapter(getSupportFragmentManager()));
     }

@@ -3,37 +3,27 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:background="@drawable/funny_background">
-    <com.capricorn.RayMenu
-            android:id="@+id/openThingsArcMenu"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="left|top"/>
-    <LinearLayout  android:layout_width="wrap_content"
-                   android:layout_height="wrap_content"
-                   android:orientation="vertical"
-                   android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true">
-    <ImageView android:id="@+id/agreeImageView"
-               android:layout_width="wrap_content"
-               android:layout_height="wrap_content"
-               android:src="@drawable/agree"
-               android:layout_gravity="center"/>
-<FrameLayout android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-        android:layout_marginLeft="30dp"
-        android:layout_marginRight="30dp">
+        android:background="@drawable/background">
+<FrameLayout android:id="@+id/container"
+        android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:layout_marginBottom="90dp"
+              android:layout_marginTop="90dp"
+              android:layout_marginLeft="30dp"
+              android:layout_marginRight="30dp"
+        android:background="@drawable/photo"
+        android:padding="25dp"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true">
     <ImageView android:id="@+id/photoFunnyImageView"
                android:layout_width="wrap_content"
                android:layout_height="wrap_content"
-               android:adjustViewBounds="true"
-               android:scaleType="centerInside"
-               android:padding="25dp"
-               android:background="@drawable/funny_photo_background"/>
+               android:scaleType="matrix"/>
     <ImageView android:id="@+id/overlayFunnyImageView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:scaleType="matrix"/>
+            android:scaleType="matrix"
+            android:alpha="0.5"/>
     <ImageView android:id="@+id/imageViewDrawThing"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -41,10 +31,14 @@
             android:visibility="invisible"
             android:layout_gravity="center|bottom"/>
 </FrameLayout>
-    </LinearLayout>
     <SeekBar android:id="@+id/seekBarSizeChange"
              android:layout_width="match_parent"
              android:layout_height="wrap_content"
              android:max="30"
-             android:layout_alignParentBottom="true"/>
+             android:layout_alignParentTop="true"/>
+    <com.capricorn.RayMenu
+            android:id="@+id/openThingsArcMenu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"/>
 </RelativeLayout>

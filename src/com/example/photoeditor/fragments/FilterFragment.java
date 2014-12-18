@@ -15,6 +15,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import com.example.photoeditor.FilterActivity;
 import com.example.photoeditor.R;
+import com.example.photoeditor.StartActivity;
 import com.example.photoeditor.helpers.ImageSaver;
 import uk.co.senab.photoview.PhotoViewAttacher;
 
@@ -25,22 +26,23 @@ public class FilterFragment extends Fragment {
     private FilterFragment(){}
     private static final String PHOTO = "photo";
     private ImageView mAgreeImage,mPhoto;
+    private Bitmap mPhotoFromEditor;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         setRetainInstance(true);
         Bundle args = getArguments();
-        final Bitmap photo = args.getParcelable(PHOTO);
+        mPhotoFromEditor = args.getParcelable(PHOTO);
         View view = inflater.inflate(R.layout.filter_fragmnet,container,false);
         mPhoto = (ImageView)view.findViewById(R.id.photo);
-        mPhoto.setImageBitmap(photo);
+        mPhoto.setImageBitmap(mPhotoFromEditor);
         mAgreeImage = (ImageView)view.findViewById(R.id.imageButtonAgree);
         mAgreeImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 mAgreeImage.startAnimation(AnimationUtils.loadAnimation(getActivity(),R.anim.button_animation));
                 Intent intent = new Intent();
-                byte[] image =  ImageSaver.compressImage(photo,100);
-                intent.putExtra(FilterActivity.PHOTO_WITH_EFFECT,image);
+                ImageSaver.saveImageInPrivateRepository(getActivity(),mPhotoFromEditor,StartActivity.IMAGE_FILE_NAME);
+                intent.putExtra(FilterActivity.PHOTO_WITH_EFFECT, StartActivity.IMAGE_FILE_NAME);
                 getActivity().setResult(Activity.RESULT_OK,intent);
                 getActivity().finish();
             }
